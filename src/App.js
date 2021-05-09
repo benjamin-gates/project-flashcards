@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route} from "react-router-dom";
 import Layout from "./Layout";
 
 /**
@@ -9,11 +9,11 @@ import Layout from "./Layout";
 function App() {
   return (
     <div className="app-routes">
-      <Switch>
+      
         <Route path="/">
           <Layout />
         </Route>
-      </Switch>
+       
     </div>
   );
 }
