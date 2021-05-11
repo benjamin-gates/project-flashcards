@@ -1,10 +1,8 @@
 import React, { useState } from "react";
-import { NavLink, Link, Route, useHistory, push } from "react-router-dom";
-import Home from "./Home";
+import { NavLink, useHistory} from "react-router-dom";
 import { createDeck } from "../utils/api";
-import Deck from "./Deck";
 
-function CreateDeck({setLength, length}) {
+function CreateDeck() {
   const initialState = {
     name: "",
     message: "",
@@ -18,19 +16,13 @@ function CreateDeck({setLength, length}) {
     });
   };
 
-  const [deckId, setDeckId] = useState(undefined);
-
   const history = useHistory();
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setLength(length+1)
-    //console.log(formData)
     createDeck(formData)
       .then((result) => history.push(`/decks/${result.id}`));
     };
-
-  //console.log(formData.name, formData.message);
 
   return (
     <div>
@@ -38,14 +30,7 @@ function CreateDeck({setLength, length}) {
         Home
       </NavLink>
       /Create Deck
-      <Route exact path={`/`}>
-        <Home />
-      </Route>
-      {deckId ? (
-          <Route path={`/decks/:deckId`}>
-              <Deck />
-          </Route>
-      ) : (null)}
+      <h1>Create Deck</h1>
       <form onSubmit={handleSubmit}>
         <label htmlFor="name">
           Deck Name:

@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Route, Link, Switch, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { listDecks, deleteDeck } from "../utils/api";
-import CreateDeck from "./CreateDeck";
-import Deck from "./Deck";
-import NotFound from "./NotFound";
 
 function Home() {
     const history = useHistory();
@@ -13,9 +10,6 @@ function Home() {
     listDecks().then(setDecks);
   },[length]);
 
-  
-
-
  const handleDelete = async (id) => {
      const confirmation = window.confirm("Delete this deck? You will not be able to recover it.")
      if (confirmation){
@@ -24,12 +18,9 @@ function Home() {
          .then(setDecks)
          .then(setLength(decks.length));
      }
-      //console.log(deckId);
-      //.then(() => window.confirm());
   };
 
-  const homeBody = decks.map((deck) => {
-    return (
+  const homeBody = decks.map((deck) => (
       <div key={deck.id}>
         <h3>{deck.name}</h3>
         <p>{deck.description}</p>
@@ -37,35 +28,16 @@ function Home() {
         <button type="delete" onClick={() => handleDelete(deck.id)}>Delete</button>
         <button type="button" onClick={() => history.push(`/decks/${deck.id}`)}>View</button>
       </div>
-    );
-  });
+    )
+  );
 
-  function Home() {
-    return (
+    return decks ? (
       <div>
-        <Link to={`/decks/new`}>Create Deck</Link>
+          <button type="button" onClick={() => history.push(`/decks/new`)}>Create Deck</button>
         {homeBody}
       </div>
-    );
-  }
-  return (
-    <div>
-      <Switch>
-        <Route path={`/decks/new`}>
-          <CreateDeck history={history} setLength={setLength} length={length}/>
-        </Route>
-        <Route path={`/decks/:deckId`}>
-            <Deck/>
-        </Route>
-        <Route path={`/`}>
-          <Home />
-        </Route>
-        <Route>
-            <NotFound />
-        </Route>
-      </Switch>
-    </div>
-  );
+    ) : <p>Loading...</p>
+
 }
 
 export default Home;
