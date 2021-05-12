@@ -1,21 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { NavLink, useParams, useHistory} from "react-router-dom";
-import { readDeck, listCards } from "../utils/api";
+import React, { useState } from "react";
+import { NavLink, useHistory} from "react-router-dom";
 
-function Study() {
-  const { deckId } = useParams();
-  const [cards, setCards] = useState(undefined);
-  const [deck, setDeck] = useState(undefined);
+function Study({deck, cards}) {
   const [front, setFront] = useState(true);
   const [card, setCard] = useState(0);
   const history = useHistory();
-
-  useEffect(() => {
-    Promise.all([readDeck(deckId), listCards(deckId)]).then((results) => {
-      setDeck(results[0]);
-      setCards(results[1]);
-    });
-  }, [deckId]);
 
 const handleFlip = () => {
     setFront(!front);
@@ -32,6 +21,7 @@ function handleRestart() {
         setCard(0);
     } else history.push(`/`);
 }
+//console.log(cards);
 
   if (cards && deck)
     return (
@@ -43,10 +33,16 @@ function handleRestart() {
           /{deck.name}
         </NavLink>
         <h1>{deck.name}</h1>
-        { card === cards.length -1 && !front ? (
-    
+        { cards.length < 3 ? (
+          <div>
+          <h3>Not enough cards
+            </h3>
+            <p>You need at least 3 cards to study. You currently have {cards.length} cards in this deck.</p>
+            <button type="button" onClick={() => history.push(`/decks/${deck.id}/cards/new`)}>Add Cards</button>
+            </div>
+        ):card === cards.length - 1 && !front ? (
             <div>
-                
+              <h3>Card {card+1} of {cards.length}</h3>
             <p>{cards[card].back}</p>
             <br />
             <button type="button" onClick={handleFlip}>
@@ -55,10 +51,10 @@ function handleRestart() {
             <button type="next" onClick={handleRestart}>
                 Restart
             </button>
-            
           </div>
         )
         :front ? (<div>
+          <h3>Card {card+1} of {cards.length}</h3>
           <p>{cards[card].front}</p>
           <br />
           <button type="button" onClick={handleFlip}>
@@ -67,6 +63,7 @@ function handleRestart() {
         </div>)
         :(
             <div>
+              <h3>Card {card+1} of {cards.length}</h3>
           <p>{cards[card].back}</p>
           <br />
           <button type="button" onClick={handleFlip}>

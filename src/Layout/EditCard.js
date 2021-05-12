@@ -4,25 +4,23 @@ import {
   useHistory,
   useParams,
 } from "react-router-dom";
-import { readCard, readDeck, updateCard } from "../utils/api";
+import { readCard, updateCard, listCards } from "../utils/api";
+//import CardForm from "./CardForm";
 
-function EditCard() {
+function EditCard({deck, setCards}) {
   const { deckId, cardId } = useParams();
   const history = useHistory();
   const [formData, setFormData] = useState(undefined);
-  const [deck, setDeck] = useState(undefined);
 
   useEffect(() => {
-    Promise.all([readDeck(deckId), readCard(cardId)]).then((results) => {
-      setDeck(results[0]);
-      setFormData({
+    readCard(cardId)
+    .then((result) => setFormData({
         id: cardId,
-        front: results[1].front,
-        back: results[1].back,
+        front: result.front,
+        back: result.back,
         deckId: deckId,
-      });
-    });
-  }, [deckId, cardId]);
+    }))
+  }, [cardId, deckId]);
 
   const handleChange = (event) => {
     setFormData({
@@ -33,9 +31,10 @@ function EditCard() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    updateCard(formData);
-    //.then(() => window.location.reload())
-    //.then(() => history.push(`${url}`))
+    updateCard(formData)
+    .then(() => listCards(deckId))
+    .then((result) => setCards(result))
+    .then(() => history.push(`/decks/${deckId}`))
   };
 
   if (deck && formData)
@@ -50,36 +49,34 @@ function EditCard() {
         /Edit Card {cardId}
         <h1>Edit Card</h1>
         <form onSubmit={handleSubmit}>
-          <label htmlFor="front">
-            Front
-            <br />
-            <textarea
-              name="front"
-              id="front"
-              onChange={handleChange}
-              value={formData.front}
-            />
-          </label>
+        <label htmlFor="front">
+          Front
           <br />
-          <label htmlFor="back">
-            Back
-            <br />
-            <textarea
-              name="back"
-              id="back"
-              onChange={handleChange}
-              value={formData.back}
-            />
-          </label>
+          <textarea
+            name="front"
+            id="front"
+            onChange={handleChange}
+            value={formData.front}
+          />
+        </label>
+        <br />
+        <label htmlFor="back">
+          Back
           <br />
-          <button
-            type="button"
-            onClick={() => history.push(`/decks/${deckId}`)}
-          >
-            Done
-          </button>
-          <button type="submit">Save</button>
-        </form>
+          <textarea
+            name="back"
+            id="back"
+            onChange={handleChange}
+            value={formData.back}
+          />
+        </label>
+        <br />
+        <button type="button" onClick={() => history.push(`/decks/${deckId}`)}>
+        Done
+        </button>
+        <button type="submit">Save</button>
+      </form>
+        {/*<CardForm formData={formData} handleChange={handleChange} handleSubmit={handleSubmit} deckId={deckId} history={history} />*/}
       </div>
     );
   else return <p>Loading...</p>;

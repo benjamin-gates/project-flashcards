@@ -1,25 +1,24 @@
-import React, {useEffect, useState} from "react";
-import {useHistory, useRouteMatch, useParams} from "react-router-dom";
-import { listCards } from "../utils/api";
+import React from "react";
+import {useHistory, useRouteMatch} from "react-router-dom";
+import {deleteCard, listCards} from "../utils/api";
 
-function CardList(){
+function CardList({cards, deckId, setCards}){
     const {url} = useRouteMatch();
-    const {deckId} = useParams();
     const history = useHistory();
-    const [cards, setCards] = useState(undefined);
-
-    useEffect(() => {
-        listCards(deckId).then(setCards)
-    },[deckId])
-
+    function handleDelete(cardId) {
+        if(window.confirm(`Delete this card? You will not be able to recover it`))   
+        {deleteCard(cardId)
+        .then(() => listCards(deckId))
+        .then((result) => setCards(result))}
+    }
     
     if(cards) {
-        const cardList = cards.map((card) => (
-            <li key={card.id}>
+        const cardList = cards.map((card, index) => (
+            <li key={index}>
                 <p>{card.front}</p>
                 <p>{card.back}</p>
                 <button type="button" onClick={() => history.push(`${url}/cards/${card.id}/edit`)}>Edit</button>
-                <button type="delete">Delete</button>
+                <button type="delete" onClick={() => handleDelete(card.id)}>Delete</button>
             </li>
         ));
         return cardList

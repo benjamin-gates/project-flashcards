@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, {useState } from "react";
 import { NavLink, useHistory, useParams, useRouteMatch} from "react-router-dom";
-import { createCard, readDeck } from "../utils/api";
+//import CardForm from "./CardForm";
+import { createCard, listCards} from "../utils/api";
 
-function AddCard() {
+
+function AddCard({deck, setCards}) {
     const {deckId} = useParams();
     const history = useHistory();
     const {url} = useRouteMatch();
@@ -11,12 +13,6 @@ function AddCard() {
     back: "",
   };
   const [formData, setFormData] = useState(initialState);
-  const [deck, setDeck] = useState(undefined);
-
-  useEffect(() => {
-      readDeck(deckId)
-      .then((result) => setDeck(result))
-  },[deckId]);
 
   const handleChange = (event) => {
     setFormData({
@@ -29,11 +25,14 @@ function AddCard() {
     event.preventDefault();
     createCard(deckId, formData)
     .then(() => setFormData(initialState))
+    .then(() => listCards(deckId))
+    .then((result) => setCards(result))
     .then(() => history.push(`${url}`))
     };
 
   if (deck) return (
     <div>
+      <div>
       <NavLink exact to={`/`}>
         Home
       </NavLink>
@@ -41,8 +40,8 @@ function AddCard() {
           /{deck.name}
       </NavLink>
       /Add Card
-      <h1>{deck.name}: Add Card</h1>
-      <form onSubmit={handleSubmit}>
+      </div>
+      <h3>{deck.name}: Add Card</h3><form onSubmit={handleSubmit}>
         <label htmlFor="front">
           Front
           <br />
@@ -70,6 +69,8 @@ function AddCard() {
         </button>
         <button type="submit">Save</button>
       </form>
+
+  {/*<CardForm formData={formData} handleChange={handleChange} handleSubmit={handleSubmit} deckId={deckId} history={history}/>*/}
     </div>
   )
   else return (<p>Loading...</p> )
