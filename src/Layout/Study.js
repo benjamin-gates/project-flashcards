@@ -21,7 +21,6 @@ function handleRestart() {
         setCard(0);
     } else history.push(`/`);
 }
-//console.log(cards);
 
   if (cards && deck)
     return (

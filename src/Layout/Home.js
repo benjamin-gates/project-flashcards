@@ -14,9 +14,9 @@ function Home() {
      const confirmation = window.confirm("Delete this deck? You will not be able to recover it.")
      if (confirmation){
          await deleteDeck(id);
-         listDecks()
-         .then(setDecks)
-         .then(setLength(decks.length));
+         /*listDecks()
+         .then(setDecks)*/
+         setLength(decks.length);
      }
   };
 

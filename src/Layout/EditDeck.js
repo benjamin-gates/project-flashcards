@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import { NavLink, useHistory, useParams } from "react-router-dom";
 import { updateDeck } from "../utils/api";
 
-function EditDeck({ deck, setDeck }) {
+function EditDeck({ deck, setDeck, setNewDeck }) {
   const { deckId } = useParams();
   const initialState = {
     name: deck.name,
     description: deck.description,
   };
   const [formData, setFormData] = useState(initialState);
+
 
   const handleChange = (event) => {
     setFormData({
@@ -26,7 +27,7 @@ function EditDeck({ deck, setDeck }) {
       name: formData.name,
       description: formData.description,
     })
-      .then((result) => setDeck(result))
+      .then((result) => setNewDeck(result))
       .then(() => history.push(`/decks/${deckId}`));
   };
 

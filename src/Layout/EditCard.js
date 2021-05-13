@@ -7,10 +7,11 @@ import {
 import { readCard, updateCard, listCards } from "../utils/api";
 //import CardForm from "./CardForm";
 
-function EditCard({deck, setCards}) {
+function EditCard({deck, setCards, cards, newCards, setNewCards}) {
   const { deckId, cardId } = useParams();
   const history = useHistory();
   const [formData, setFormData] = useState(undefined);
+  setNewCards(cards);
 
   useEffect(() => {
     readCard(cardId)
@@ -32,8 +33,12 @@ function EditCard({deck, setCards}) {
   const handleSubmit = (event) => {
     event.preventDefault();
     updateCard(formData)
-    .then(() => listCards(deckId))
-    .then((result) => setCards(result))
+    .then((card) => newCards.map((item) => {
+      return card.id === item.id ? card : item;
+    }))
+    .then((result) => setNewCards(result))
+    /*.then(() => listCards(deckId))
+    .then((result) => setCards(result))*/
     .then(() => history.push(`/decks/${deckId}`))
   };
 

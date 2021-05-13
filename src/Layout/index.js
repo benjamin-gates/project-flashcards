@@ -10,7 +10,7 @@ function Layout() {
   return (
     <div>
       <Header />
-      <div className="container">
+      <div className="container" >
         <Switch>
           <Route exact path="/decks/new">
             <CreateDeck />

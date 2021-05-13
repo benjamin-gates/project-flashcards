@@ -2,14 +2,16 @@ import React from "react";
 import {useHistory, useRouteMatch} from "react-router-dom";
 import {deleteCard, listCards} from "../utils/api";
 
-function CardList({cards, deckId, setCards}){
+function CardList({cards, deckId, setCards, newCards, setNewCards}){
+    //if(!cards||!cards.length) return null;
     const {url} = useRouteMatch();
     const history = useHistory();
     function handleDelete(cardId) {
         if(window.confirm(`Delete this card? You will not be able to recover it`))   
         {deleteCard(cardId)
-        .then(() => listCards(deckId))
-        .then((result) => setCards(result))}
+            .then(() => setNewCards(cards.map((card) => card.id===cardId ? null : card)))
+        /*.then(() => listCards(deckId))
+        .then((result) => setCards(result))*/}
     }
     
     if(cards) {

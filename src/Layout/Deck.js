@@ -20,19 +20,24 @@ function Deck() {
   const { deckId } = useParams();
   const [deck, setDeck] = useState(undefined);
   const [cards, setCards] = useState(undefined);
-
+  const [newDeck, setNewDeck] = useState(undefined);
+  const [newCards, setNewCards] = useState(cards);
   useEffect(() => {
-    Promise.all([readDeck(deckId), listCards(deckId)]).then((results) => {
+    /*Promise.all([readDeck(deckId), listCards(deckId)]).then((results) => {
       setDeck(results[0]);
+      console.log(results[0],'deck');
       setCards(results[1]);
-    });
-  }, [deckId]);
+    });*/
+    readDeck(deckId)
+    .then(setDeck);
+  },[newDeck, newCards]);
 
   const handleDelete = () => {
     if(window.confirm(`Delete deck? You will not be able to recover it after it is deleted`)){
       deleteDeck(deckId)
-      .then(() => listCards(deckId))
-      .then(setCards)
+      //.then((result) => setNewDeck(result))
+      /*.then(() => listCards(deckId))
+      .then(setCards)*/
       .then(() => history.push(`/`))
     }
 
@@ -41,16 +46,16 @@ function Deck() {
   return deck ? (
     <Switch>
       <Route path="/decks/:deckId/cards/:cardId/edit">
-        <EditCard deck={deck} setCards={setCards}/>
+        <EditCard deck={deck} setCards={setCards} cards={deck.cards} newCards={newCards} setNewCards={setNewCards}/>
       </Route>
       <Route path="/decks/:deckId/cards/new">
-        <AddCard deck={deck} setCards={setCards}/>
+        <AddCard deck={deck} setDeck={setDeck} setCards={setCards} cards={deck.cards} newDeck={newDeck} setNewDeck={setNewDeck} newCards={newCards} setNewCards={setNewCards}/>
       </Route>
       <Route path={`/decks/:deckId/edit`}>
-        <EditDeck deck={deck} setDeck={setDeck} />
+        <EditDeck deck={deck} setDeck={setDeck} setNewDeck={setNewDeck}/>
       </Route>
       <Route path="/decks/:deckId/study">
-        <Study deck={deck} cards={cards} />
+        <Study deck={deck} cards={deck.cards} />
       </Route>
       <div>
         <NavLink exact to={`/`}>
@@ -76,7 +81,7 @@ function Deck() {
         </div>
         <br />
         <ul>
-          <CardList cards={cards} deckId={deckId} setCards={setCards}/>
+          <CardList cards={deck.cards} deckId={deckId} setCards={setCards} newCards={newCards} setNewCards={setNewCards}/>
         </ul>
       </div>
     </Switch>

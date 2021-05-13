@@ -1,18 +1,34 @@
-import React, {useState } from "react";
+import React, {useEffect, useState } from "react";
 import { NavLink, useHistory, useParams, useRouteMatch} from "react-router-dom";
 //import CardForm from "./CardForm";
-import { createCard, listCards} from "../utils/api";
+import { createCard, listCards, readDeck} from "../utils/api";
 
 
-function AddCard({deck, setCards}) {
+function AddCard({deck, setDeck, setCards, cards, newCards, setNewCards}) {
     const {deckId} = useParams();
     const history = useHistory();
     const {url} = useRouteMatch();
+    const [newDeck, setNewDeck] = useState(undefined);
+
+    const someObject = {
+      name: 'howdy',
+      id: 'poop'
+    };
+    console.log(someObject, `object`);
+  console.log(deck, `deck`);
   const initialState = {
     front: "",
     back: "",
   };
   const [formData, setFormData] = useState(initialState);
+  const name = deck.name;
+  console.log(deck.name, 'prop');
+  console.log(name, 'variable');
+
+  useEffect(() => {
+    readDeck(deckId)
+    .then((result) => setNewDeck(result))
+  },[]);
 
   const handleChange = (event) => {
     setFormData({
@@ -21,27 +37,34 @@ function AddCard({deck, setCards}) {
     });
   };
 
+  /*useEffect(() => {
+    readDeck(deckId)
+    .then(setDeck)
+  })*/
+
   const handleSubmit = (event) => {
     event.preventDefault();
     createCard(deckId, formData)
+    .then((result) => newCards.push(result))
     .then(() => setFormData(initialState))
-    .then(() => listCards(deckId))
-    .then((result) => setCards(result))
-    .then(() => history.push(`${url}`))
+    /*.then(() => listCards(deckId))
+    .then((result) => setCards(result))*/
+    //.then(() => history.push(`${url}`))
+
     };
 
-  if (deck) return (
+  if (newDeck) return (
     <div>
-      <div>
       <NavLink exact to={`/`}>
         Home
       </NavLink>
       <NavLink exact to={`/decks/${deckId}`}>
-          /{deck.name}
+          /{newDeck.name}
       </NavLink>
       /Add Card
-      </div>
-      <h3>{deck.name}: Add Card</h3><form onSubmit={handleSubmit}>
+      <h1>{`${newDeck.name}`}: Add Card</h1>
+      <div>
+      <form onSubmit={handleSubmit}>
         <label htmlFor="front">
           Front
           <br />
@@ -69,6 +92,7 @@ function AddCard({deck, setCards}) {
         </button>
         <button type="submit">Save</button>
       </form>
+      </div>
 
   {/*<CardForm formData={formData} handleChange={handleChange} handleSubmit={handleSubmit} deckId={deckId} history={history}/>*/}
     </div>

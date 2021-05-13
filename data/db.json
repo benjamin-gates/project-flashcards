@@ -9,6 +9,12 @@
       "name": "React Router",
       "description": "React Router is a collection of navigational components that compose declaratively with your application.",
       "id": 2
+    },
+    {
+      "name": "some deck",
+      "message": "",
+      "description": "some descritpion",
+      "id": 3
     }
   ],
   "cards": [
@@ -22,12 +28,6 @@
       "id": 2,
       "front": "How do you modify the state of a different React component?",
       "back": "Not at all! State is visible to the component only.",
-      "deckId": 1
-    },
-    {
-      "id": 3,
-      "front": "How do you pass data 'down' to a React child component?",
-      "back": "As properties or props",
       "deckId": 1
     },
     {
@@ -98,6 +98,36 @@
       "id": 17,
       "front": "some cards",
       "back": "some cards"
+    },
+    {
+      "front": "fronty front",
+      "back": "backy  back",
+      "deckId": 3,
+      "id": 18
+    },
+    {
+      "front": "red blue",
+      "back": "yellow orange",
+      "deckId": 3,
+      "id": 19
+    },
+    {
+      "front": "card",
+      "back": "card",
+      "deckId": 3,
+      "id": 20
+    },
+    {
+      "front": "card",
+      "back": "card",
+      "deckId": 3,
+      "id": 21
+    },
+    {
+      "front": "something",
+      "back": "else",
+      "deckId": 3,
+      "id": 22
     }
   ]
 }
