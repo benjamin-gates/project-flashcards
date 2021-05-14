@@ -70,13 +70,13 @@ function Deck() {
       </Route>
       <div>
         <nav aria-label="breadcrumb">
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item">
+          <ol className="breadcrumb">
+            <li className="breadcrumb-item">
               <NavLink exact to={`/`}>
                 Home
               </NavLink>
             </li>
-            <li class="breadcrumb-item active" aria-current="page">
+            <li className="breadcrumb-item active" aria-current="page">
               {deck.name}
             </li>
           </ol>
@@ -86,21 +86,21 @@ function Deck() {
           <p>{deck.description}</p>
           <div style={{display: "flex", justifyContent:"space-between"}}>
             <div>
-          <button type="button" class="btn btn-secondary" onClick={() => history.push(`${url}/edit`)}>
+          <button type="button" className="btn btn-secondary" onClick={() => history.push(`${url}/edit`)}>
             Edit
           </button>
-          <button type="button" class="btn btn-info" onClick={() => history.push(`${url}/study`)}>
+          <button type="button" className="btn btn-info" onClick={() => history.push(`${url}/study`)}>
             Study
           </button>
           <button
-            type="button" class="btn btn-primary"
+            type="button" className="btn btn-primary"
             onClick={() => history.push(`${url}/cards/new`)}
           >
             Add Cards
           </button>
           </div>
           <div>
-          <button type="delete" class="btn btn-danger" onClick={handleDelete}>
+          <button type="delete" className="btn btn-danger" onClick={handleDelete}>
             Delete
           </button>
           </div>

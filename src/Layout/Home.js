@@ -26,17 +26,17 @@ function Home() {
   // Mapping deck content with buttons for the main body of the Home component
   const homeBody = decks.map((deck) => (
     <div key={deck.id} class="card border border-secondary" width="18 rem" style={{marginTop:"20px"}}>
-      <div class="card-body">
-      <h2 class="card-title">{deck.name}</h2>
-      <p class="card-text">{deck.description}</p>
+      <div className="card-body">
+      <h2 className="card-title">{deck.name}</h2>
+      <p className="card-text">{deck.description}</p>
 
       <div style={{display:"flex", justifyContent: "space-between"}}>
-      <h4 class="card-text">{deck.cards.length} cards</h4>
+      <h4 className="card-text">{deck.cards.length} cards</h4>
       <div>
-      <button type="delete" style={{marginRight: "10px"}} class="btn btn-danger" onClick={() => handleDelete(deck.id)}>
+      <button type="delete" style={{marginRight: "10px"}} className="btn btn-danger" onClick={() => handleDelete(deck.id)}>
         Delete
       </button>
-      <button type="button" class="btn btn-info" onClick={() => history.push(`/decks/${deck.id}`)}>
+      <button type="button" className="btn btn-info" onClick={() => history.push(`/decks/${deck.id}`)}>
         View
       </button>
       </div>
