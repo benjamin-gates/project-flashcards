@@ -12,7 +12,6 @@ function EditCard({ deck, cards, newCards, setNewCards }) {
   setNewCards(0);
 
   useEffect(() => {
-    setNewCards(cards);
     readCard(cardId).then((result) =>
       setFormData({
         id: cardId,
