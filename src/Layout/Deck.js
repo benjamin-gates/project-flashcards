@@ -7,7 +7,7 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
-import { listCards, readDeck, deleteDeck } from "../utils/api";
+import { readDeck, deleteDeck } from "../utils/api";
 import CardList from "./CardList";
 import EditDeck from "./EditDeck";
 import AddCard from "./AddCard";
@@ -23,66 +23,96 @@ function Deck() {
   const [newDeck, setNewDeck] = useState(undefined);
   const [newCards, setNewCards] = useState(cards);
   useEffect(() => {
-    /*Promise.all([readDeck(deckId), listCards(deckId)]).then((results) => {
-      setDeck(results[0]);
-      console.log(results[0],'deck');
-      setCards(results[1]);
-    });*/
-    readDeck(deckId)
-    .then(setDeck);
-  },[newDeck, newCards]);
+    readDeck(deckId).then(setDeck);
+  }, [newDeck, newCards, deckId]);
 
   const handleDelete = () => {
-    if(window.confirm(`Delete deck? You will not be able to recover it after it is deleted`)){
-      deleteDeck(deckId)
-      //.then((result) => setNewDeck(result))
-      /*.then(() => listCards(deckId))
-      .then(setCards)*/
-      .then(() => history.push(`/`))
+    if (
+      window.confirm(
+        `Delete deck? You will not be able to recover it after it is deleted`
+      )
+    ) {
+      deleteDeck(deckId).then(() => history.push(`/`));
     }
-
   };
 
   return deck ? (
     <Switch>
       <Route path="/decks/:deckId/cards/:cardId/edit">
-        <EditCard deck={deck} setCards={setCards} cards={deck.cards} newCards={newCards} setNewCards={setNewCards}/>
+        <EditCard
+          deck={deck}
+          setCards={setCards}
+          cards={deck.cards}
+          newCards={newCards}
+          setNewCards={setNewCards}
+        />
       </Route>
       <Route path="/decks/:deckId/cards/new">
-        <AddCard deck={deck} setDeck={setDeck} setCards={setCards} cards={deck.cards} newDeck={newDeck} setNewDeck={setNewDeck} newCards={newCards} setNewCards={setNewCards}/>
+        <AddCard
+          deck={deck}
+          setDeck={setDeck}
+          setCards={setCards}
+          cards={deck.cards}
+          newDeck={newDeck}
+          setNewDeck={setNewDeck}
+          newCards={newCards}
+          setNewCards={setNewCards}
+        />
       </Route>
       <Route path={`/decks/:deckId/edit`}>
-        <EditDeck deck={deck} setDeck={setDeck} setNewDeck={setNewDeck}/>
+        <EditDeck deck={deck} setDeck={setDeck} setNewDeck={setNewDeck} />
       </Route>
       <Route path="/decks/:deckId/study">
         <Study deck={deck} cards={deck.cards} />
       </Route>
       <div>
-        <NavLink exact to={`/`}>
-          Home
-        </NavLink>
-        /{deck.name}
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <NavLink exact to={`/`}>
+                Home
+              </NavLink>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+              {deck.name}
+            </li>
+          </ol>
+        </nav>
         <div>
           <h3>{deck.name}</h3>
           <p>{deck.description}</p>
-          <button type="button" onClick={() => history.push(`${url}/edit`)}>
+          <div style={{display: "flex", justifyContent:"space-between"}}>
+            <div>
+          <button type="button" class="btn btn-secondary" onClick={() => history.push(`${url}/edit`)}>
             Edit
           </button>
-          <button type="button" onClick={() => history.push(`${url}/study`)}>
+          <button type="button" class="btn btn-info" onClick={() => history.push(`${url}/study`)}>
             Study
           </button>
           <button
-            type="button"
+            type="button" class="btn btn-primary"
             onClick={() => history.push(`${url}/cards/new`)}
           >
             Add Cards
           </button>
-          <button type="delete" onClick={handleDelete}>Delete</button>
+          </div>
+          <div>
+          <button type="delete" class="btn btn-danger" onClick={handleDelete}>
+            Delete
+          </button>
+          </div>
+          </div>
         </div>
         <br />
-        <ul>
-          <CardList cards={deck.cards} deckId={deckId} setCards={setCards} newCards={newCards} setNewCards={setNewCards}/>
-        </ul>
+        <div>
+          <CardList
+            cards={deck.cards}
+            deckId={deckId}
+            setCards={setCards}
+            newCards={newCards}
+            setNewCards={setNewCards}
+          />
+        </div>
       </div>
     </Switch>
   ) : (

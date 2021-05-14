@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { NavLink, useHistory, useParams } from "react-router-dom";
-import { readCard, updateCard, listCards } from "../utils/api";
-//import CardForm from "./CardForm";
+import { readCard, updateCard} from "../utils/api";
+import CardForm from "./CardForm";
 
-function EditCard({ deck, setCards, cards, newCards, setNewCards }) {
+
+function EditCard({ deck, cards, newCards, setNewCards }) {
   const { deckId, cardId } = useParams();
   const history = useHistory();
   const [formData, setFormData] = useState(undefined);
-  //setNewCards(cards);
-  //setNewCards(newCards);
-  setNewCards(0);
 
-  //console.log(typeof deckId, '1');
+  setNewCards(0);
 
   useEffect(() => {
     setNewCards(cards);
@@ -34,17 +32,8 @@ function EditCard({ deck, setCards, cards, newCards, setNewCards }) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    //console.log(typeof deckId, '2');
     updateCard(formData)
-      /*.then((card) =>
-        newCards.map((item) => {
-          return card.id === item.id ? card : item;
-        })
-      )*/
       .then(() => setNewCards(newCards + 1))
-      //.then((result) => setNewCards(result))
-      /*.then(() => listCards(deckId))
-    .then((result) => setCards(result))*/
       .then(() => history.push(`/decks/${deckId}`));
   };
 
@@ -63,11 +52,11 @@ function EditCard({ deck, setCards, cards, newCards, setNewCards }) {
                 {deck.name}
               </NavLink>
             </li>
-            <li class="breadcrumb-item">Edit Card {cardId}</li>
+            <li class="breadcrumb-item active" aria-current="page">Edit Card {cardId}</li>
           </ol>
         </nav>
         <h1>Edit Card</h1>
-        <form onSubmit={handleSubmit}>
+        {/*<form onSubmit={handleSubmit}>
           <label htmlFor="front">
             Front
             <br />
@@ -97,8 +86,8 @@ function EditCard({ deck, setCards, cards, newCards, setNewCards }) {
             Done
           </button>
           <button type="submit">Save</button>
-        </form>
-        {/*<CardForm formData={formData} handleChange={handleChange} handleSubmit={handleSubmit} deckId={deckId} history={history} />*/}
+    </form>*/}
+        <CardForm formData={formData} handleChange={handleChange} handleSubmit={handleSubmit} deckId={deckId} history={history} />
       </div>
     );
   else return <p>Loading...</p>;

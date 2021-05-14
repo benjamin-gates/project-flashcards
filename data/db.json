@@ -11,10 +11,9 @@
       "id": 2
     },
     {
-      "name": "test deck",
-      "message": "",
-      "description": "test deck",
-      "id": 3
+      "id": 3,
+      "name": "test decks",
+      "description": "test decks"
     }
   ],
   "cards": [
@@ -43,11 +42,10 @@
       "id": 5
     },
     {
-      "cards": [],
-      "front": "b",
-      "back": "b",
-      "deckId": 1,
-      "id": 7
+      "id": 7,
+      "front": "b2345",
+      "back": "b1123",
+      "deckId": 1
     },
     {
       "id": 8,
@@ -98,6 +96,18 @@
       "id": 17,
       "front": "some cards",
       "back": "some cards"
+    },
+    {
+      "id": 18,
+      "front": "something",
+      "back": "else",
+      "deckId": 3
+    },
+    {
+      "front": "This is a new card",
+      "back": "Yes it it",
+      "deckId": 1,
+      "id": 19
     }
   ]
 }
