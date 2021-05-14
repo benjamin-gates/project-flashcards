@@ -1,6 +1,7 @@
 import React from "react";
 
 function CardForm( {formData, handleChange, handleSubmit, deckId, history}){
+  // This component creates the form that will be shared between components AddCard and EditCard
     return (
 <form onSubmit={handleSubmit}>
         <label htmlFor="front" style={{fontWeight:"bold"}}>

@@ -22,10 +22,13 @@ function Deck() {
   const [cards, setCards] = useState(undefined);
   const [newDeck, setNewDeck] = useState(undefined);
   const [newCards, setNewCards] = useState(cards);
+
+  // Triggers readDeck each time the state of newDeck, newCards or deck Id changes
   useEffect(() => {
     readDeck(deckId).then(setDeck);
   }, [newDeck, newCards, deckId]);
 
+  // Deletes deck upon confirmation from user
   const handleDelete = () => {
     if (
       window.confirm(

@@ -6,15 +6,18 @@ function Study({ deck, cards }) {
   const [card, setCard] = useState(0);
   const history = useHistory();
 
+  // Toggles state of front when "Flip" is clicked
   const handleFlip = () => {
     setFront(!front);
   };
 
+  // Toggles state of front and sets the card # to the next card when "Next" is clicked
   const handleNext = () => {
     setCard(card + 1);
     setFront(!front);
   };
 
+  // Restarts Study from the beginning upon confirmation from the user, else the user is taken back to the Home screen
   function handleRestart() {
     if (window.confirm("Restart Cards?")) {
       setFront(!front);

@@ -6,10 +6,13 @@ function Home() {
   const history = useHistory();
   const [decks, setDecks] = useState([]);
   const [length, setLength] = useState(0);
+
+  // The list of decks are loaded each time the state "length" changes
   useEffect(() => {
     listDecks().then(setDecks);
   }, [length]);
 
+  // When delete button is clicked, the deck will be deleted upon confirmation from user
   const handleDelete = async (id) => {
     const confirmation = window.confirm(
       "Delete this deck? You will not be able to recover it."
@@ -20,6 +23,7 @@ function Home() {
     }
   };
 
+  // Mapping deck content with buttons for the main body of the Home component
   const homeBody = decks.map((deck) => (
     <div key={deck.id} class="card border border-secondary" width="18 rem" style={{marginTop:"20px"}}>
       <div class="card-body">

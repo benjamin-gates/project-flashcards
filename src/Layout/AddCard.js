@@ -9,12 +9,14 @@ function AddCard({ deck, newCards, setNewCards }) {
   const [newDeck, setNewDeck] = useState(undefined);
   setNewCards(0);
 
+  // Creating "blank" form state for AddCard
   const initialState = {
     front: "",
     back: "",
   };
   const [formData, setFormData] = useState(initialState);
 
+  // The deck with matching deck ID is loaded to add a card
   useEffect(() => {
     readDeck(deckId).then((result) => setNewDeck(result));
   }, [deckId]);
@@ -26,6 +28,7 @@ function AddCard({ deck, newCards, setNewCards }) {
     });
   };
 
+  // Form handler for that creates new card using createCard
   const handleSubmit = (event) => {
     event.preventDefault();
     createCard(deckId, formData)
@@ -48,45 +51,19 @@ function AddCard({ deck, newCards, setNewCards }) {
                 {newDeck.name}
               </NavLink>
             </li>
-            <li class="breadcrumb-item active" aria-current="page">Add Card</li>
+            <li class="breadcrumb-item active" aria-current="page">
+              Add Card
+            </li>
           </ol>
         </nav>
         <h2>{newDeck.name}: Add Card</h2>
-        {/*<div>
-          <form onSubmit={handleSubmit}>
-            <label htmlFor="front">
-              Front
-              <br />
-              <textarea
-                name="front"
-                id="front"
-                onChange={handleChange}
-                value={formData.front}
-              />
-            </label>
-            <br />
-            <label htmlFor="back">
-              Back
-              <br />
-              <textarea
-                name="back"
-                id="back"
-                onChange={handleChange}
-                value={formData.back}
-              />
-            </label>
-            <br />
-            <button
-              type="button"
-              onClick={() => history.push(`/decks/${deckId}`)}
-            >
-              Done
-            </button>
-            <button type="submit">Save</button>
-          </form>
-        </div>*/}
-
-        <CardForm formData={formData} handleChange={handleChange} handleSubmit={handleSubmit} deckId={deckId} history={history}/>
+        <CardForm
+          formData={formData}
+          handleChange={handleChange}
+          handleSubmit={handleSubmit}
+          deckId={deckId}
+          history={history}
+        />
       </div>
     );
   else return <p>Loading...</p>;

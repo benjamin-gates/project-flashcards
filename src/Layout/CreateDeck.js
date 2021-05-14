@@ -3,6 +3,8 @@ import { NavLink, useHistory} from "react-router-dom";
 import { createDeck } from "../utils/api";
 
 function CreateDeck() {
+
+  // Creating "blank" form state for formData
   const initialState = {
     name: "",
     message: "",
@@ -18,6 +20,7 @@ function CreateDeck() {
 
   const history = useHistory();
 
+  // Adds deck to deck, then takes the user to the new Deck screen upon Submit
   const handleSubmit = (event) => {
     event.preventDefault();
     createDeck(formData)

@@ -4,6 +4,8 @@ import { updateDeck } from "../utils/api";
 
 function EditDeck({ deck, setNewDeck }) {
   const { deckId } = useParams();
+
+  // Sets initial formData to the Deck name and description passed from Deck
   const initialState = {
     name: deck.name,
     description: deck.description,
@@ -19,6 +21,7 @@ function EditDeck({ deck, setNewDeck }) {
 
   const history = useHistory();
 
+  // Updates the deck with information entered into form, then takes user to Deck screen upon Submit
   const handleSubmit = (event) => {
     event.preventDefault();
     updateDeck({

@@ -5,12 +5,15 @@ import {deleteCard} from "../utils/api";
 function CardList({cards, setNewCards}){
     const {url} = useRouteMatch();
     const history = useHistory();
+
+    // Delete handler for Card. 
     function handleDelete(cardId) {
         if(window.confirm(`Delete this card? You will not be able to recover it`))   
         {deleteCard(cardId)
             .then(() => setNewCards(cards.map((card) => card.id===cardId ? null : card)))}
     }
     
+    // Mapping each card into its own card
     if(cards) {
         const cardList = cards.map((card, index) => (
             <div key={index} class="card border border-secondary" style={{marginBottom: "15px"}}>
