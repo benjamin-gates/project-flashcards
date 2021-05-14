@@ -11,9 +11,9 @@
       "id": 2
     },
     {
-      "name": "some deck",
+      "name": "test deck",
       "message": "",
-      "description": "some descritpion",
+      "description": "test deck",
       "id": 3
     }
   ],
@@ -98,36 +98,6 @@
       "id": 17,
       "front": "some cards",
       "back": "some cards"
-    },
-    {
-      "front": "fronty front",
-      "back": "backy  back",
-      "deckId": 3,
-      "id": 18
-    },
-    {
-      "front": "red blue",
-      "back": "yellow orange",
-      "deckId": 3,
-      "id": 19
-    },
-    {
-      "front": "card",
-      "back": "card",
-      "deckId": 3,
-      "id": 20
-    },
-    {
-      "front": "card",
-      "back": "card",
-      "deckId": 3,
-      "id": 21
-    },
-    {
-      "front": "something",
-      "back": "else",
-      "deckId": 3,
-      "id": 22
     }
   ]
 }

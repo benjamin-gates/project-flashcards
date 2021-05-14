@@ -9,6 +9,7 @@ function AddCard({deck, setDeck, setCards, cards, newCards, setNewCards}) {
     const history = useHistory();
     const {url} = useRouteMatch();
     const [newDeck, setNewDeck] = useState(undefined);
+    setNewCards(0);
 
     const someObject = {
       name: 'howdy',
@@ -45,7 +46,8 @@ function AddCard({deck, setDeck, setCards, cards, newCards, setNewCards}) {
   const handleSubmit = (event) => {
     event.preventDefault();
     createCard(deckId, formData)
-    .then((result) => newCards.push(result))
+    .then(() => setNewCards(newCards+1))
+    //.then((result) => newCards.push(result))
     .then(() => setFormData(initialState))
     /*.then(() => listCards(deckId))
     .then((result) => setCards(result))*/
