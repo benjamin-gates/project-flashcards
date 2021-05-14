@@ -59,10 +59,10 @@ function AddCard({deck, setDeck, setCards, cards, newCards, setNewCards}) {
         Home
       </NavLink>
       <NavLink exact to={`/decks/${deckId}`}>
-          /{newDeck.name}
+          {newDeck.name}
       </NavLink>
-      /Add Card
-      <h1>{`${newDeck.name}`}: Add Card</h1>
+      Add Card
+      <h2>{newDeck.name}: Add Card</h2>
       <div>
       <form onSubmit={handleSubmit}>
         <label htmlFor="front">
