@@ -1,4 +1,4 @@
-# Project- Flashcards
+# Project - Flashcards
 Application built with React that gives user functionality to create and edit their own study decks
 
 ## Context to Project
